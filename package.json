@@ -1,0 +1,20 @@
+{
+  "name": "machine-tracking-system",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "dev:api": "npm run dev --workspace=@machine-tracking/api",
+    "dev:web": "npm run dev --workspace=@machine-tracking/web",
+    "build": "npm run build --workspaces",
+    "seed": "npm run seed --workspace=@machine-tracking/api",
+    "test:integration": "npm run test:integration --workspace=@machine-tracking/api"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

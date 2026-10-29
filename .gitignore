@@ -1,0 +1,15 @@
+
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+.env
+.env.local
+**/.env
+**/.env.local
+*.log
+.DS_Store
+Machine-Tracking-System/
+Machine-Tracking-System-Code128-Scan-FIX.zip
+apps/api/data/sheets.json

@@ -1,0 +1,24 @@
+PATCH OPTIMASI MACHINE TRACKING SYSTEM
+
+Perubahan:
+1. Dashboard menggunakan endpoint tunggal GET /api/v1/dashboard/overview agar pembacaan data mesin tidak diulang oleh tiga endpoint dashboard.
+2. GoogleSheetsProvider menyimpan cache 15 detik hanya untuk master kategori, lokasi, dan PIC. Sheet mesin dan log transaksi tidak di-cache.
+3. Cache master dihapus setelah penambahan baris.
+4. Kesalahan pembacaan Google Sheets sekarang diteruskan ke error handler, bukan disamarkan sebagai sheet kosong.
+5. Update log kondisi mengembalikan data yang sudah diperbarui dari baris yang telah dibaca, sehingga tidak membaca sheet kondisi sekali lagi.
+
+PENTING:
+- File .env dan apps/api/.env sengaja tidak disertakan karena berpotensi berisi kredensial.
+- Folder apps/api/dist juga tidak disertakan agar tidak menjalankan JavaScript build lama. Build ulang sebelum menjalankan mode produksi.
+- Salin konfigurasi dari backup lokal Anda ke .env dan apps/api/.env jika proyek memang menggunakannya. Jangan pernah mengunggah file tersebut.
+- Setelah ZIP diekstrak, jalankan:
+  npm install
+  npm run build
+  npm run test:integration
+  npm run dev:api
+  npm run dev:web
+  (Jalankan dev:api dan dev:web di dua terminal terpisah.)
+- Tes integrasi mungkin memerlukan konfigurasi/akun Google Sheets yang valid.
+- Karena ZIP asli yang diunggah menyertakan file .env, bila kredensial di dalamnya adalah kredensial aktif, rotasi/ganti private key Google service account tersebut dan perbarui konfigurasi lokal.
+
+Catatan: Build belum dijalankan di lingkungan ini karena dependency node_modules tidak tersedia.

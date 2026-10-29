@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: machine-tracking-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: machine_tracking
+      POSTGRES_USER: machine_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-dev-only-change-me}
+    ports:
+      - "5432:5432"
+    volumes:
+      - machine_tracking_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U machine_app -d machine_tracking"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  machine_tracking_pgdata:

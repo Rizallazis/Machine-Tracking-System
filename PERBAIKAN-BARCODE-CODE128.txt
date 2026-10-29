@@ -1,0 +1,22 @@
+PERBAIKAN BARCODE CODE 128 — PT ESGI TRACKING
+
+Perubahan dalam paket ini:
+1. Halaman Detail Mesin membuat barcode Code 128 horizontal dari ID_Code (fallback ke Machine_ID jika ID_Code kosong), bukan lagi gambar QR.
+2. Endpoint /api/v1/qr/:token tetap mendukung QR_Token lama, tetapi juga mencari ID_Code, Machine_ID, Asset_Number, dan Serial_Number.
+3. Scanner frontend tetap mendukung QR lama dan Code 128, serta mencocokkan QR_Token dalam daftar mesin.
+
+PENTING UNTUK DATA GOOGLE SHEETS:
+- Pastikan kolom T (indeks ke-20) pada 01_MASTER_MESIN memang berisi ID_Code, karena google-sheets-provider.ts membaca ID_Code dari r[19].
+- Pastikan ID_Code unik untuk setiap mesin. Jika satu kode dipakai oleh dua baris, sistem bisa memilih mesin yang salah.
+- Formatkan kolom ID_Code sebagai Plain text agar nol di depan tidak hilang.
+- Jangan menjalankan setup/seed yang menimpa data produksi sebelum membuat cadangan.
+
+CARA MENJALANKAN:
+1. Buat cadangan folder proyek dan Google Sheets.
+2. Salin folder hasil ekstraksi ke lingkungan pengembangan/tes.
+3. Jalankan npm install jika dependensi belum tersedia.
+4. Jalankan npm run build untuk memeriksa TypeScript/build.
+5. Setelah lolos tes, deploy frontend dan backend bersama-sama.
+6. Buka Detail Mesin dan cetak ulang label. Lakukan scan uji pada satu mesin terlebih dahulu.
+
+Catatan: build belum dijalankan di lingkungan ini karena node_modules tidak tersedia.

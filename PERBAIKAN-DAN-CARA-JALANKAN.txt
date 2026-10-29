@@ -1,0 +1,38 @@
+PERBAIKAN MACHINE TRACKING SYSTEM
+
+PERUBAHAN KODE:
+1. Login sekarang selalu memerlukan password dan Password_Hash yang valid.
+2. JWT_SECRET wajib diisi dengan secret acak minimal 32 karakter; nilai bawaan yang diketahui ditolak.
+3. Endpoint POST /api/v1/movements dibatasi untuk role ADMIN, IE, dan SPV. Jika SOP pabrik berbeda, ubah daftar role di apps/api/src/routes/movements.routes.ts.
+4. STORAGE_MODE=google dengan konfigurasi Google yang kurang akan menghasilkan error yang jelas, tidak diam-diam beralih ke data lokal.
+5. GOOGLE_PRIVATE_KEY mendukung format newline literal \\n.
+
+PENTING:
+- Arsip ini sengaja tidak menyertakan .env, node_modules, atau dist.
+- File data lokal apps/api/data/sheets.json disertakan. Buat backup sebelum menjalankan.
+- Salin .env.example menjadi apps/api/.env, lalu atur nilai konfigurasi.
+- Untuk tetap menggunakan database lokal: STORAGE_MODE=local.
+- Isi JWT_SECRET dengan nilai acak rahasia minimal 32 karakter. Jangan gunakan contoh publik atau bagikan nilai ini.
+- Jangan beralih ke STORAGE_MODE=google sebelum tiga variabel Google diisi dengan benar dan akses spreadsheet diberikan ke service account.
+
+CARA MENJALANKAN DI WINDOWS:
+1. Ekstrak ZIP ke folder baru.
+2. Buka terminal / PowerShell pada folder hasil ekstrak.
+3. Jalankan: copy .env.example apps\api\.env
+   Jika file .env.example mengatur variabel umum root, backend dotenv secara default membaca .env dari direktori kerja. Jalankan perintah dari root proyek. Jika proyekmu biasa memakai apps/api/.env, salin juga ke apps/api/.env; pastikan server memuat file tersebut.
+4. Pastikan apps/api/.env memuat STORAGE_MODE=local dan JWT_SECRET rahasia baru.
+5. Jalankan: npm install
+6. Jalankan: npm run build
+7. Terminal 1: npm run dev:api
+8. Terminal 2: npm run dev:web
+9. Buka URL frontend yang ditampilkan Vite, biasanya http://localhost:5173.
+
+CATATAN KONFIGURASI .ENV:
+Backend memanggil dotenv.config() tanpa path khusus, jadi file .env harus ada di direktori kerja saat menjalankan perintah. Cara paling aman: buat .env di root proyek dari .env.example. Bila file konfigurasi lama ada di apps/api/.env, jangan menghapusnya sebelum memastikan konfigurasi root sudah benar.
+
+UJI DASAR:
+- Login dengan password yang benar harus berhasil.
+- Login tanpa password atau password salah harus ditolak.
+- Role MECHANIC dan PIC tidak boleh melakukan POST perpindahan mesin.
+- ADMIN, IE, dan SPV boleh melakukan POST perpindahan mesin.
+- Dengan STORAGE_MODE=local, data tersimpan di apps/api/data/sheets.json.
